@@ -3,6 +3,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SheetService } from '../../sheet.service';
+import { HttpClient } from '@angular/common/http';
 
 interface Status {
   status: 'Open' | 'Closed';
@@ -10,10 +11,11 @@ interface Status {
 }
 
 export interface Event {
+  Map: string;
+  Status: 'Open' | 'Closed';
   eventName: string;
-  Status: Status;
+  time: string;
   venue: string;
-  Map: string;  
 }
 
 @Component({
@@ -29,32 +31,33 @@ export class TableComponent implements OnInit{
   sanitizer=inject(DomSanitizer)
   sheetService=inject(SheetService)
   filter = '';
+  
   datas: Event[] = [
-    {
-      eventName: 'SlideScape (Paper)',
-      Status: {
-        status: 'Open',
-        time: '10:30'
-      },
-      venue: 'WW200',
-      Map: `https://maps.app.goo.gl/hipAN7UbRrYjgXuk6`
-    },
-    {
-      eventName: 'Code Matrix',
-      Status: {
-        status: 'Closed'
-      },
-      venue: 'ME201',
-      Map: `https://maps.app.goo.gl/CZTeCngaYJC6Tk5c9`
-    },
-    {
-      eventName: 'TechHorizon',
-      Status: {
-        status: 'Closed'
-      },
-      venue: 'EW102',
-      Map: `https://maps.app.goo.gl/i8MM3WBNoB9TQb89A`
-    }
+    // {
+    //   eventName: 'SlideScape (Paper)',
+    //   Status: {
+    //     status: 'Open',
+    //     time: '10:30'
+    //   },
+    //   venue: 'WW200',
+    //   Map: `https://maps.app.goo.gl/hipAN7UbRrYjgXuk6`
+    // },
+    // {
+    //   eventName: 'Code Matrix',
+    //   Status: {
+    //     status: 'Closed'
+    //   },
+    //   venue: 'ME201',
+    //   Map: `https://maps.app.goo.gl/CZTeCngaYJC6Tk5c9`
+    // },
+    // {
+    //   eventName: 'TechHorizon',
+    //   Status: {
+    //     status: 'Closed'
+    //   },
+    //   venue: 'EW102',
+    //   Map: `https://maps.app.goo.gl/i8MM3WBNoB9TQb89A`
+    // }
   ];
 
   currentPage = 1;
@@ -63,36 +66,47 @@ export class TableComponent implements OnInit{
 
 
   ngOnInit(): void {
-    // this.fetchDataFromSheet();
+    this.fetchSheetData();
   }
-  // fetchDataFromSheet() {
-  //   this.sheetService.getSheetData().subscribe((response: any) => {
-  //     console.log(response)
-  //   });
-  // }
-  get sanitizedMaps() {
-    return this.datas.map(data => ({
-      ...data,
-      safeMap: this.sanitizer.bypassSecurityTrustHtml(data.Map)
-    }));
+  fetchSheetData() {
+    console.log(1);
+    this.sheetService.getDataWithPolling().subscribe((response: any) => {
+      this.datas = response
+    });
+  }
+    get sanitizedMaps() {
+      return this.datas.map(data => ({
+          ...data,
+          safeMap: this.sanitizer.bypassSecurityTrustHtml(data.Map)
+      }));
   }
 
   get paginatedData() {
-    const filteredData = this.datas.filter(data =>
-      data.eventName.toLowerCase().includes(this.filter.toLowerCase()) ||
-      data.venue.toLowerCase().includes(this.filter.toLowerCase())
-    );
-    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    return filteredData.slice(startIndex, startIndex + this.itemsPerPage);
+      // Ensure filter is defined and use an empty string if it's undefined
+      const searchTerm = this.filter?.toLowerCase() || '';
+
+      const filteredData = this.datas.filter(data => {
+          const eventName = data.eventName?.toLowerCase() || ''; // Safe access to eventName
+          const venue = data.venue?.toLowerCase() || ''; // Safe access to venue
+          return eventName.includes(searchTerm) || venue.includes(searchTerm);
+      });
+
+      const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+      return filteredData.slice(startIndex, startIndex + this.itemsPerPage);
   }
 
   get totalPages() {
-    const filteredData = this.datas.filter(data =>
-      data.eventName.toLowerCase().includes(this.filter.toLowerCase()) ||
-      data.venue.toLowerCase().includes(this.filter.toLowerCase())
-    );
-    return Math.ceil(filteredData.length / this.itemsPerPage);
+      const searchTerm = this.filter?.toLowerCase() || '';
+
+      const filteredData = this.datas.filter(data => {
+          const eventName = data.eventName?.toLowerCase() || ''; 
+          const venue = data.venue?.toLowerCase() || ''; 
+          return eventName.includes(searchTerm) || venue.includes(searchTerm);
+      });
+
+      return Math.ceil(filteredData.length / this.itemsPerPage);
   }
+
 
   get pageNumbers() {
     const pages: number[] = [];

@@ -1,16 +1,23 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { interval, map, Observable, switchMap } from 'rxjs';
+import { environment } from './environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SheetService {
 
-  // private sheetUrl =`https://docs.google.com/spreadsheets/d/e/2PACX-1vT7JM0IelEOvjFYbqBINI3mKdO2o0_bO10rddCOCjY0QkviTn-d5V221xRxxf4VRiBZQWUcBpyCOvnH/pubhtml?gid=0&single=true`
-  // http=inject(HttpClient);
-  // getSheetData(): Observable<any> {
-  //   return this.http.get(this.sheetUrl);
-  // }
+  private sheetUrl = environment.SheetId;
+  http=inject(HttpClient);
+  getSheetData(): Observable<any> {
+    return this.http.get(this.sheetUrl);
+  }
+  getDataWithPolling(): Observable<Event[]> {
+    return interval(5000)
+      .pipe(
+        switchMap(() => this.getSheetData()),
+      );
+  }
 
 }

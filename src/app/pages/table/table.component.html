@@ -28,15 +28,15 @@
                 <ng-container *ngFor="let data of paginatedData; let i = index" class="m-2 ">
                     <tr [ngClass]="{ 'bg-lightblue bg-opacity-25 ': i % 2 === 1, 'bg-blue': i % 2 === 0 }" class="text-white text-xs md:text-base lg:text-lg hover:bg-lightblue">
                         <td class="px-1 py-2 rounded-s-xl ">{{ data.eventName }}</td>
-                        <td *ngIf="data.Status.status === 'Open'" class="px-0 py-2 ">
+                        <td *ngIf="data.Status === 'Open'" class="px-0 py-2 ">
                             <div class="bg-[#07660A] rounded-xl w-[70px] h-[30px] flex justify-center items-center">
-                                {{ data.Status.status }}
+                                {{ data.Status }}
                             </div>
-                            <span >Time - {{ data.Status.time }}</span>
+                            <span >Time - {{ data.time }}</span>
                         </td>
-                        <td *ngIf="data.Status.status !== 'Open'" class="px-0 py-2 ">
+                        <td *ngIf="data.Status !== 'Open'" class="px-0 py-2 ">
                             <div class="bg-red rounded-xl w-[70px] h-[30px] flex justify-center items-center">
-                                {{ data.Status.status }}
+                                {{ data.Status }}
                             </div>
                         </td>
                         <td class="px-0 py-2">{{ data.venue }}</td>
@@ -49,7 +49,6 @@
             </tbody>            
         </table>
     </div>
-
     <div class="flex justify-between items-center px-5 lg:px-28">
         <div class="flex flex-row items-center mt-4 md:gap-2 lg:gap-10">
             <label for="items-per-page" class="text-white text-xs md:text-sm lg:text-base text-opacity-60">Items per page:</label>
@@ -57,7 +56,6 @@
                 <option class="text-white bg-lightblue hover:bg-blue" *ngFor="let limit of [5, 10, 15, 20]" [value]="limit">{{ limit }}</option>
             </select>
         </div>
-
         <div class="flex justify-center gap-1 mt-4">
             <button (click)="changePage(1)" [disabled]="currentPage === 1" class="p-2 text-sm md:text-sm rounded-lg bg-lightblue text-white text-opacity-60 hover:bg-yellow">&lt;&lt;</button>
             <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1" class="p-2 text-sm md:text-sm rounded-lg bg-lightblue text-white text-opacity-60 hover:bg-yellow">&lt;</button>
@@ -66,7 +64,6 @@
                 <button *ngIf="page === currentPage" class="p-2 text-sm md:text-sm rounded-lg bg-lightblue text-white mx-1">{{ page }}</button>
                 <button *ngIf="page !== currentPage" (click)="changePage(page)" class="p-2 text-sm md:text-sm rounded-lg bg-lightblue text-white text-opacity-60 mx-1 hover:bg-yellow">{{ page }}</button>
             </ng-container>
-
             <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages" class="p-2 text-sm md:text-sm rounded-lg bg-lightblue text-white text-opacity-60 hover:bg-yellow">&gt;</button>
             <button (click)="changePage(totalPages)" [disabled]="currentPage === totalPages" class="p-2 text-sm md:text-sm rounded-lg bg-lightblue text-white text-opacity-60 hover:bg-yellow">&gt;&gt;</button>
         </div>
