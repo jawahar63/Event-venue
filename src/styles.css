@@ -2,3 +2,30 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base{
+    ::-webkit-scrollbar {
+        width: 8px;
+            /* Vertical scrollbar width */
+        height: 8px;
+            /* Horizontal scrollbar height */
+    }
+    
+    ::-webkit-scrollbar-track {
+        background-color: #010C16;
+            /* darkblue for the track */
+        border-radius: 9999px;
+            /* Fully rounded track */
+        margin: 2px;
+            /* Ensures track isn't clipped at the edges */
+    }
+    
+    ::-webkit-scrollbar-thumb {
+        background-color: #6EACDA;
+            /* lightblue for the thumb */
+        border-radius: 9999px;
+            /* Fully rounded thumb */
+        border: 2px solid #010C16;
+            /* Add padding around the thumb to keep it smaller */
+    }
+}
