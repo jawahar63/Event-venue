@@ -27,32 +27,38 @@
                 </tr>
             </thead>
             <tbody class="w-full">
-                <ng-container *ngFor="let data of filteredData; let i = index">
-                    <tr [ngClass]="{ 'bg-lightblue bg-opacity-25': i % 2 === 1, 'bg-blue': i % 2 === 0 }"
-                        class="w-full text-white text-xs md:text-base lg:text-lg hover:bg-lightblue border-b border-y-gray border-opacity-50">
-                        <td class="px-1 py-2 rounded-s-xl">{{ data.eventName }}</td>
-                        <td *ngIf="data.Status === 'Open'" class="px-0 py-2">
-                            <div class="bg-[#07660A] rounded-xl w-[70px] h-[30px] flex justify-center items-center">
-                                {{ data.Status }}
-                            </div>
-                            <span>Time - {{ data.time }}</span>
-                        </td>
-                        <td *ngIf="data.Status !== 'Open'" class="px-0 py-2">
-                            <div class="bg-red rounded-xl w-[70px] h-[30px] flex justify-center items-center">
-                                {{ data.Status }}
-                            </div>
-                        </td>
-                        <td class="px-0 py-2">{{ data.venue }}</td>
-                        <td *ngIf="data.Map!==''" class="px-0 py-2 rounded-e-xl cursor-pointer w-10 h-10" (click)="showMap(data.Map)">
-                            <img src="map.png" alt="map">
-                        </td>
-                        <td *ngIf="data.Map===''" class="px-0 py-2 rounded-e-xl w-10 h-10">
-                            <img class="filter grayscale" src="map.png" alt="map">
-                        </td>
-                    </tr>
+                <ng-container *ngIf="loading; else dataRows">
+                    <app-skeleton-loader *ngFor="let _ of [].constructor(5)"></app-skeleton-loader>
+                    <!-- Display skeleton loader for 5 rows -->
                 </ng-container>
+                <ng-template #dataRows>
+                    <ng-container *ngFor="let data of filteredData; let i = index">
+                        <tr [ngClass]="{ 'bg-lightblue bg-opacity-25': i % 2 === 1, 'bg-blue': i % 2 === 0 }"
+                            class="w-full text-white text-xs md:text-base lg:text-lg hover:bg-lightblue border-b border-y-gray border-opacity-50">
+                            <td class="px-1 py-2 rounded-s-xl">{{ data.eventName }}</td>
+                            <td *ngIf="data.Status === 'Open'" class="px-0 py-2">
+                                <div class="bg-[#07660A] rounded-xl w-[70px] h-[30px] flex justify-center items-center">
+                                    {{ data.Status }}
+                                </div>
+                                <span>Time - {{ data.time }}</span>
+                            </td>
+                            <td *ngIf="data.Status !== 'Open'" class="px-0 py-2">
+                                <div class="bg-red rounded-xl w-[70px] h-[30px] flex justify-center items-center">
+                                    {{ data.Status }}
+                                </div>
+                            </td>
+                            <td class="px-0 py-2">{{ data.venue }}</td>
+                            <td *ngIf="data.Map!==''" class="px-0 py-2 rounded-e-xl cursor-pointer w-10 h-10"
+                                (click)="showMap(data.Map)">
+                                <img src="map.png" alt="map">
+                            </td>
+                            <td *ngIf="data.Map===''" class="px-0 py-2 rounded-e-xl w-10 h-10">
+                                <img class="filter grayscale" src="map.png" alt="map">
+                            </td>
+                        </tr>
+                    </ng-container>
+                </ng-template>
             </tbody>
         </table>
     </div>
-
 </div>

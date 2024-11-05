@@ -1,0 +1,37 @@
+.skeleton-loader {
+    width: 100%;
+    padding: 1rem;
+}
+
+.skeleton-row {
+    display: flex;
+    align-items: center;
+    margin: 0.5rem 0;
+}
+
+.skeleton-item {
+    background-color: #005898;
+    border-radius: 4px;
+    margin-right: 1rem;
+}
+
+.skeleton-name {
+    width: 30%;
+    height: 20px;
+}
+
+.skeleton-status {
+    width: 20%;
+    height: 20px;
+}
+
+.skeleton-venue {
+    width: 30%;
+    height: 20px;
+}
+
+.skeleton-map {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}

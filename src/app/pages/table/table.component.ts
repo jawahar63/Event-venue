@@ -3,6 +3,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SheetService } from '../../sheet.service';
+import { SkeletonLoaderComponent } from '../skeleton-loader/skeleton-loader.component';
 
 export interface Event {
   Map: string;
@@ -15,9 +16,9 @@ export interface Event {
 @Component({
   selector: 'app-table',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule,SkeletonLoaderComponent],
   templateUrl: './table.component.html',
-  styleUrls: ['./table.component.css'] // corrected styleUrl to styleUrls
+  styleUrls: ['./table.component.css']
 })
 export class TableComponent implements OnInit {
   sanitizer = inject(DomSanitizer);
@@ -25,12 +26,14 @@ export class TableComponent implements OnInit {
   filter = '';
   
   datas: Event[] = [];
+  loading = true; // Loading state
 
   ngOnInit(): void {
     this.fetchSheetData();
   }
 
   fetchSheetData() {
+    this.loading = true; // Start loading
     this.sheetService.getRealTimeSheetData().subscribe((response: Event[]) => {
       this.datas = response.sort((a, b) => {
         // Move closed events to the end
@@ -38,6 +41,9 @@ export class TableComponent implements OnInit {
         if (a.Status === 'Open' && b.Status === 'Closed') return -1;
         return 0; // Keep the order if both are the same
       });
+      this.loading = false; // Stop loading
+    }, () => {
+      this.loading = false; // Stop loading on error
     });
   }
 
