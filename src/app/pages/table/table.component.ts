@@ -49,7 +49,6 @@ export class TableComponent implements OnInit {
   }
 
   get filteredData() {
-    // Filter by event name and venue
     const searchTerm = this.filter?.toLowerCase() || '';
     return this.datas.filter(data => {
       const eventName = data.eventName?.toLowerCase() || '';
