@@ -1,27 +1,58 @@
-# EventOutline
+# Event Outline
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.8.
+## Overview
+**Event Outline** is a platform designed to list upcoming events, including their schedules, venues, and availability. The application fetches event data from Google Sheets, ensuring real-time updates and accessibility.
 
-## Development server
+## 🚀 Features
+- 📅 **Event Listings**: Displays a list of open events with their details.
+- ⏳ **Real-time Updates**: Fetches event data dynamically from Google Sheets.
+- 📍 **Venue Information**: Shows the location of each event.
+- 📊 **Event Status**: Indicates whether an event is open or closed.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-## Code scaffolding
+##Live URL
+Vist the website
+```bash
+https://inferix-event.vercel.app/
+```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## 🛠 Tech Stack
+- **Frontend**: Angular, Tailwind CSS
+- **Data Source**: Google Sheets API
 
-## Build
+## 🏗 Installation
+### Prerequisites
+Ensure you have the following installed:
+- [Node.js](https://nodejs.org/)
+- [Angular CLI](https://angular.io/cli)
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### Clone the Repository
+```bash
+git clone https://github.com/jawahar63/event-venue.git
+cd event-outline
+```
 
-## Running unit tests
+### Frontend Setup
+```bash
+npm install
+ng serve
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## 📌 Environment Variables
+Create a `.env` file in the project directory and configure the following:
+```env
+SheetId=your_google_sheet_id
+```
 
-## Running end-to-end tests
+## 📜 Usage
+1. Open the application to view upcoming events.
+2. Get real-time updates on event availability and details.
+3. Check venue information for navigation.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## 🤝 Contributing
+Contributions are welcome! Feel free to fork the repo, create a branch, and submit a pull request.
 
-## Further help
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## 📧 Contact
+For any inquiries, reach out at [your-email@example.com](mailto:your-email@example.com).
+
