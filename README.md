@@ -11,10 +11,8 @@
 
 
 ##Live URL
-Vist the website
-```bash
-https://inferix-event.vercel.app/
-```
+[Vist the website](https://inferix-event.vercel.app/)
+
 
 ## 🛠 Tech Stack
 - **Frontend**: Angular, Tailwind CSS
@@ -54,5 +52,5 @@ Contributions are welcome! Feel free to fork the repo, create a branch, and subm
 
 
 ## 📧 Contact
-For any inquiries, reach out at [your-email@example.com](mailto:your-email@example.com).
+For any inquiries, reach out at [d.jawahar6382@example.com](mailto:d.jawahar6382@example.com).
 
